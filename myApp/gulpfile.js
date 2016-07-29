@@ -29,6 +29,13 @@ var gulp = require('gulp'),
     naturalSort = require('gulp-natural-sort'),
     bowerFiles = require('main-bower-files');
 
+var bs = require('browser-sync').create(); // create a browser sync instance.
+gulp.task('browser-sync', function () {
+    bs.init({
+        proxy: "localhost:8080"
+    });
+});
+
 var handleErrors = require('./gulp/handleErrors'),
     serve = require('./gulp/serve'),
     util = require('./gulp/utils'),
@@ -43,7 +50,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('copy', function () {
-    return es.merge( 
+    return es.merge(
         gulp.src(config.app + 'i18n/**')
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist + 'i18n/'))
